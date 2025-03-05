@@ -80,7 +80,7 @@ if has_config("commonlib") then
         if has_config("commonlib") then
             add_packages(get_config("commonlib"), { public = true })
         end
-        add_packages("SkyrimScripting.SKSE_Messages")
+        add_packages("SkyrimScripting.SKSE_Messages", { public = true })
 end
 
 if has_config("build_example") then
