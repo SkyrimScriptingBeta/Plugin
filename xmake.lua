@@ -17,6 +17,16 @@ option("include_repo_skyrimscripting")
     set_default(true)
 option_end()
 
+option("include_repo_skyrimscripting_beta")
+    set_description("If true, add the SkyrimScripting Beta repository during build")
+    set_default(true)
+option_end()
+
+option("include_repo_mrowrlib")
+    set_description("If true, add the MrowrLib repository during build")
+    set_default(true)
+option_end()
+
 option("build_example")
     set_description("Build example project using this library")
     set_default(true)
@@ -40,6 +50,18 @@ mod_info = {
 
 skyrim_versions = {"ae", "se", "ng", "vr"}
 
+if has_config("include_repo_skyrimscripting_beta") then
+    add_repositories("SkyrimScriptingBeta https://github.com/SkyrimScriptingBeta/Packages.git")
+end
+
+if has_config("include_repo_mrowrlib") then
+    add_repositories("MrowrLib https://github.com/MrowrLib/Packages.git")
+end
+
+-- add_requires("SkyrimScripting.Entrypoint", { configs = { commonlib = "skyrim-commonlib-ae" }})
+-- add_requires("SkyrimScripting.Logging", { configs = { commonlib = "skyrim-commonlib-ae", use_log_library = true, include_repo_mrowrlib = true }})
+add_requires("SkyrimScripting.SKSE_Messages", { configs = { commonlib = "skyrim-commonlib-ae", use_log_library = true, include_repo_mrowrlib = true }})
+
 if has_config("include_repo_skyrimscripting") then
     add_repositories("SkyrimScripting https://github.com/SkyrimScripting/Packages.git")
 end
@@ -58,6 +80,7 @@ if has_config("commonlib") then
         if has_config("commonlib") then
             add_packages(get_config("commonlib"), { public = true })
         end
+        add_packages("SkyrimScripting.SKSE_Messages")
 end
 
 if has_config("build_example") then
